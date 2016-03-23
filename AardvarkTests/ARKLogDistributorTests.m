@@ -40,9 +40,6 @@
 @end
 
 
-typedef void (^LogHandlingBlock)(ARKLogMessage *logMessage);
-
-
 @interface ARKTestLogObserver : NSObject <ARKLogObserver>
 
 @property (nonatomic, copy) NSMutableArray *observedLogs;
