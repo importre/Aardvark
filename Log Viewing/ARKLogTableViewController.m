@@ -251,7 +251,7 @@
         }
     }
     
-    NSTimeInterval delta = logForTimestampDelta ? [currentLog.creationDate timeIntervalSinceDate:logForTimestampDelta.creationDate] : 0.0;
+    NSTimeInterval delta = logForTimestampDelta ? [currentLog.date timeIntervalSinceDate:logForTimestampDelta.date] : 0.0;
     cell.textLabel.text = [NSString stringWithFormat:@"+%.1f\t%@", delta, currentLog.text];
     
     UIColor *textColor = nil;
@@ -260,26 +260,26 @@
         case ARKLogTypeSeparator:
         {
             NSCalendarUnit dayComponents = (NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay);
-            NSDateComponents *logDateComponents = [[NSCalendar currentCalendar] components:dayComponents fromDate:currentLog.creationDate];
+            NSDateComponents *logDateComponents = [[NSCalendar currentCalendar] components:dayComponents fromDate:currentLog.date];
             NSDateComponents *todayDateComponents = [[NSCalendar currentCalendar] components:dayComponents fromDate:[NSDate date]];
             
             BOOL const logWasCreatedToday = [logDateComponents isEqual:todayDateComponents];
             if ([currentLog isKindOfClass:[ARKTimestampLogMessage class]]) {
                 if (logWasCreatedToday) {
-                    cell.textLabel.text = [NSDateFormatter localizedStringFromDate:currentLog.creationDate dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+                    cell.textLabel.text = [NSDateFormatter localizedStringFromDate:currentLog.date dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
                 } else {
-                    cell.textLabel.text = [NSDateFormatter localizedStringFromDate:currentLog.creationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
+                    cell.textLabel.text = [NSDateFormatter localizedStringFromDate:currentLog.date dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
                 }
                 
             } else {
                 if (logWasCreatedToday) {
                     cell.textLabel.text = [NSString stringWithFormat:@"%@ -- %@",
                                            currentLog.text,
-                                           [NSDateFormatter localizedStringFromDate:currentLog.creationDate dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterMediumStyle]];
+                                           [NSDateFormatter localizedStringFromDate:currentLog.date dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterMediumStyle]];
                 } else {
                     cell.textLabel.text = [NSString stringWithFormat:@"%@ -- %@",
                                            currentLog.text,
-                                           [NSDateFormatter localizedStringFromDate:currentLog.creationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle]];
+                                           [NSDateFormatter localizedStringFromDate:currentLog.date dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle]];
                 }
             }
             
@@ -438,8 +438,8 @@
     NSDate *previousTimestampDate = nil;
     for (ARKLogMessage *logMessage in logMessages) {
         NSTimeInterval const secondsPerMinute = 60.0;
-        if (!previousTimestampDate || [logMessage.creationDate timeIntervalSinceDate:previousTimestampDate] > self.minutesBetweenTimestamps * secondsPerMinute) {
-            NSTimeInterval timeIntervalRoundedToMinute = [logMessage.creationDate timeIntervalSinceReferenceDate] - fmod([logMessage.creationDate timeIntervalSinceReferenceDate], secondsPerMinute);
+        if (!previousTimestampDate || [logMessage.date timeIntervalSinceDate:previousTimestampDate] > self.minutesBetweenTimestamps * secondsPerMinute) {
+            NSTimeInterval timeIntervalRoundedToMinute = [logMessage.date timeIntervalSinceReferenceDate] - fmod([logMessage.date timeIntervalSinceReferenceDate], secondsPerMinute);
             NSDate *timestampDate = [NSDate dateWithTimeIntervalSinceReferenceDate:timeIntervalRoundedToMinute];
             [logMessagesWithMinuteSeparators addObject:[[ARKTimestampLogMessage alloc] initWithDate:timestampDate]];
             previousTimestampDate = timestampDate;
@@ -497,10 +497,10 @@
 - (instancetype)initWithDate:(NSDate *)date;
 {
     NSString *text = [[[self class] sharedDateFormatter] stringFromDate:date];
-    return [super initWithText:text image:nil type:ARKLogTypeSeparator userInfo:nil creationDate:date];
+    return [super initWithText:text image:nil type:ARKLogTypeSeparator userInfo:nil date:date];
 }
 
-- (instancetype)initWithText:(NSString *)text image:(UIImage *)image type:(ARKLogType)type userInfo:(NSDictionary *)userInfo creationDate:(nonnull NSDate *)date;
+- (instancetype)initWithText:(NSString *)text image:(UIImage *)image type:(ARKLogType)type userInfo:(NSDictionary *)userInfo date:(nonnull NSDate *)date;
 {
     return [self initWithDate:date];
 }

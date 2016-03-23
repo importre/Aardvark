@@ -44,7 +44,7 @@
     }
     
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
-    _text = [NSString stringWithFormat:@"%@\n%@", logMessage.creationDate, logMessage.text];
+    _text = [NSString stringWithFormat:@"%@\n%@", logMessage.date, logMessage.text];
     
     return self;
 }

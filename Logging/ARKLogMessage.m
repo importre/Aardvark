@@ -36,10 +36,10 @@
 
 - (instancetype)initWithText:(NSString *)text image:(UIImage *)image type:(ARKLogType)type userInfo:(NSDictionary *)userInfo;
 {
-    return [self initWithText:text image:image type:type userInfo:userInfo creationDate:[NSDate date]];
+    return [self initWithText:text image:image type:type userInfo:userInfo date:[NSDate date]];
 }
 
-- (instancetype)initWithText:(NSString *)text image:(UIImage *)image type:(ARKLogType)type userInfo:(NSDictionary *)userInfo creationDate:(nonnull NSDate *)date;
+- (instancetype)initWithText:(NSString *)text image:(UIImage *)image type:(ARKLogType)type userInfo:(NSDictionary *)userInfo date:(nonnull NSDate *)date;
 {
     self = [super init];
     if (!self) {
@@ -50,7 +50,7 @@
     _image = image;
     _type = type;
     _userInfo = [userInfo copy];
-    _creationDate = date;
+    _date = date;
 
     return self;
 }
@@ -62,9 +62,9 @@
     NSString *text = [aDecoder decodeObjectOfClass:[NSString class] forKey:ARKSelfKeyPath(text)];
     UIImage *image = [aDecoder decodeObjectOfClass:[UIImage class] forKey:ARKSelfKeyPath(image)];
     ARKLogType type = (ARKLogType)[[aDecoder decodeObjectOfClass:[NSNumber class] forKey:ARKSelfKeyPath(type)] unsignedIntegerValue];
-    NSDate *creationDate = [[aDecoder decodeObjectOfClass:[NSDate class] forKey:ARKSelfKeyPath(creationDate)] copy];
+    NSDate *date = [[aDecoder decodeObjectOfClass:[NSDate class] forKey:ARKSelfKeyPath(date)] copy];
     
-    return [self initWithText:text image:image type:type userInfo:nil creationDate:creationDate];
+    return [self initWithText:text image:image type:type userInfo:nil date:date];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder;
@@ -72,7 +72,7 @@
     [aCoder encodeObject:self.text forKey:ARKSelfKeyPath(text)];
     [aCoder encodeObject:self.image forKey:ARKSelfKeyPath(image)];
     [aCoder encodeObject:@(self.type) forKey:ARKSelfKeyPath(type)];
-    [aCoder encodeObject:self.creationDate forKey:ARKSelfKeyPath(creationDate)];
+    [aCoder encodeObject:self.date forKey:ARKSelfKeyPath(date)];
 }
 
 #pragma mark - NSCopying
@@ -104,7 +104,7 @@
         return NO;
     }
 
-    if (![self.creationDate isEqualToDate:otherMessage.creationDate]) {
+    if (![self.date isEqualToDate:otherMessage.date]) {
         return NO;
     }
     
@@ -113,12 +113,12 @@
 
 - (NSUInteger)hash;
 {
-    return self.creationDate.hash;
+    return self.date.hash;
 }
 
 - (NSString *)description;
 {
-    NSString *dateString = [NSDateFormatter localizedStringFromDate:self.creationDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterMediumStyle];
+    NSString *dateString = [NSDateFormatter localizedStringFromDate:self.date dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterMediumStyle];
     return [NSString stringWithFormat:@"[%@] %@", dateString, self.text];
 }
 

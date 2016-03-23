@@ -46,7 +46,7 @@
     }
     
     _imageView = [[UIImageView alloc] initWithImage:logMessage.image];
-    _date = logMessage.creationDate;
+    _date = logMessage.date;
     _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapDetected:)];
     _tapGestureRecognizer.cancelsTouchesInView = NO;
     
