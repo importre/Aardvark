@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) UIImage *image;
 @property (nonatomic, readonly) ARKLogType type;
 
-/// Arbitrary information used by ARKLogBlocks. This data is not persisted.
+/// Arbitrary information that can be used by ARKLogObserver objects. This data is not persisted.
 @property (nonatomic, copy, readonly, nullable) NSDictionary *userInfo;
 
 @end
