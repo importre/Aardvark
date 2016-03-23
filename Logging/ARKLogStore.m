@@ -48,14 +48,20 @@
     ARKCheckCondition(fileName.length > 0, nil, @"Must specify a file name");
     ARKCheckCondition(maximumLogMessageCount > 0, nil, @"maximumLogMessageCount must be greater than zero");
     
+    NSURL *const persistedLogFileURL = [NSURL ARK_fileURLWithApplicationSupportFilename:fileName];
+    ARKCheckCondition(persistedLogFileURL != nil, nil, @"Could not create persisted log file URL with file name %@", fileName);
+    
+    ARKDataArchive *const dataArchive = [[ARKDataArchive alloc] initWithURL:persistedLogFileURL maximumObjectCount:maximumLogMessageCount trimmedObjectCount:0.5 * maximumLogMessageCount];
+    ARKCheckCondition(dataArchive != nil, nil, @"Could not instantiate data archive with persisted log file URL %@", persistedLogFileURL);
+    
     self = [super init];
     if (!self) {
         return nil;
     }
     
-    _persistedLogFileURL = [NSURL ARK_fileURLWithApplicationSupportFilename:fileName];
+    _persistedLogFileURL = persistedLogFileURL;
     _maximumLogMessageCount = maximumLogMessageCount;
-    _dataArchive = [[ARKDataArchive alloc] initWithURL:self.persistedLogFileURL maximumObjectCount:maximumLogMessageCount trimmedObjectCount:0.5 * maximumLogMessageCount];
+    _dataArchive = dataArchive;
     _prefixNameWhenPrintingToConsole = YES;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applicationWillTerminate:) name:UIApplicationWillTerminateNotification object:[UIApplication sharedApplication]];

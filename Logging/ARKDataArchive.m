@@ -25,16 +25,13 @@
 #import "NSFileHandle+ARKAdditions.h"
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 NSUInteger const ARKMaximumChunkSizeForTrimOperation = (1024 * 1024);
 
 
 @interface ARKDataArchive ()
 
-@property (nonatomic, readonly) NSFileHandle *fileHandle;
-@property (nonatomic, readonly) NSOperationQueue *fileOperationQueue;
+@property (nonnull, nonatomic, readonly) NSFileHandle *fileHandle;
+@property (nonnull, nonatomic, readonly) NSOperationQueue *fileOperationQueue;
 
 @property (nonatomic) NSUInteger objectCount;
 
@@ -45,22 +42,19 @@ NSUInteger const ARKMaximumChunkSizeForTrimOperation = (1024 * 1024);
 
 #pragma mark - Initialization
 
-- (nullable instancetype)init NS_UNAVAILABLE;
-{
-    ARKCheckCondition(NO, nil, @"Use initWithURL:maximumObjectCount:trimmedObjectCount:");
-}
-
 - (nullable instancetype)initWithURL:(NSURL *)fileURL maximumObjectCount:(NSUInteger)maximumObjectCount trimmedObjectCount:(NSUInteger)trimmedObjectCount;
 {
     ARKCheckCondition([fileURL isFileURL], nil, @"Must provide a file URL!");
+    NSString *const fileURLPath = fileURL.path;
+    ARKCheckCondition(fileURLPath.length > 0, nil, @"No path at file URL");
     
     self = [super init];
     if (!self) {
         return nil;
     }
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:fileURL.path]) {
-        [[NSFileManager defaultManager] createFileAtPath:fileURL.path contents:nil attributes:nil];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:fileURLPath]) {
+        [[NSFileManager defaultManager] createFileAtPath:fileURLPath contents:nil attributes:nil];
     }
     
     NSError *error = nil;
@@ -181,7 +175,9 @@ NSUInteger const ARKMaximumChunkSizeForTrimOperation = (1024 * 1024);
         [self _saveArchive_inFileOperationQueue];
         
         if (completionHandler != NULL) {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:completionHandler];
+            // Declare completionHandler as a non-optional to satisfy the compiler.
+            dispatch_block_t const operationBlock = completionHandler;
+            [[NSOperationQueue mainQueue] addOperationWithBlock:operationBlock];
         }
     }];
 }
@@ -248,6 +244,3 @@ NSUInteger const ARKMaximumChunkSizeForTrimOperation = (1024 * 1024);
 }
 
 @end
-
-
-NS_ASSUME_NONNULL_END

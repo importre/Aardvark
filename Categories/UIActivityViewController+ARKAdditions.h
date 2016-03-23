@@ -21,15 +21,9 @@
 #import <UIKit/UIKit.h>
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 @interface UIActivityViewController (ARKAdditions)
 
 /// Creates an activity sheet that allows for sharing via AirDrop, email, copying to the pasteboard and printing.
-+ (instancetype)ARK_newAardvarkActivityViewControllerWithItems:(NSArray *)items;
++ (nonnull instancetype)ARK_newAardvarkActivityViewControllerWithItems:(nonnull NSArray *)items;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

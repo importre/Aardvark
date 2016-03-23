@@ -21,18 +21,12 @@
 #import <Aardvark/ARKLogFormatter.h>
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 @interface ARKDefaultLogFormatter : NSObject <ARKLogFormatter>
 
 /// The string that is prepended to error logs.
-@property (nonatomic, copy) NSString *errorLogPrefix;
+@property (nonnull, nonatomic, copy) NSString *errorLogPrefix;
 
 /// The string that is prepended to separator logs.
-@property (nonatomic, copy) NSString *separatorLogPrefix;
+@property (nonnull, nonatomic, copy) NSString *separatorLogPrefix;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

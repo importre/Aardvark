@@ -22,5 +22,5 @@ import Foundation
 
 
 public func ARKLog(logText: String, type: ARKLogType = .Default, image: UIImage? = nil, userInfo: Dictionary<NSObject, AnyObject>? = nil) {
-    ARKLogDistributor.defaultDistributor()?.logWithText(logText, image: image, type: type, userInfo: userInfo);
+    ARKLogDistributor.defaultDistributor().logWithText(logText, image: image, type: type, userInfo: userInfo);
 }

@@ -21,14 +21,8 @@
 #import <Foundation/Foundation.h>
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 @interface NSURL (ARKAdditions)
 
-+ (nullable NSURL *)ARK_fileURLWithApplicationSupportFilename:(NSString *)filename;
++ (nullable NSURL *)ARK_fileURLWithApplicationSupportFilename:(nonnull NSString *)filename;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

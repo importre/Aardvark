@@ -58,15 +58,12 @@
 
 #pragma mark - Initialization
 
-- (nullable instancetype)initWithLogStore:(ARKLogStore *)logStore logFormatter:(id <ARKLogFormatter>)logFormatter;
+- (instancetype)initWithLogStore:(ARKLogStore *)logStore logFormatter:(id <ARKLogFormatter>)logFormatter;
 {
     ARKCheckCondition(logStore, nil, @"Must pass a log store.");
     ARKCheckCondition(logFormatter, nil, @"Must pass a logFormatter.");
 
     self = [super initWithNibName:nil bundle:nil];
-    if (!self) {
-        return nil;
-    }
     
     _logStore = logStore;
     _logFormatter = logFormatter;
@@ -75,24 +72,14 @@
     return self;
 }
 
-- (nullable instancetype)init;
+- (instancetype)init;
 {
     return [self initWithLogStore:[ARKLogDistributor defaultDistributor].defaultLogStore logFormatter:[ARKDefaultLogFormatter new]];
 }
 
-- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 {
     return [self init];
-}
-
-- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder;
-{
-    ARKCheckCondition(NO, nil, @"Please use a valid initializer.");
-}
-
-- (instancetype)initWithStyle:(UITableViewStyle)style;
-{
-    ARKCheckCondition(NO, [self init], @"Please use a valid initializer.");
 }
 
 - (void)dealloc;
@@ -348,8 +335,9 @@
     for (ARKLogMessage *logMessage in self.filteredLogs) {
         [formattedLogMessages addObject:[self.logFormatter formattedLogMessage:logMessage]];
         
-        if (logMessage.image != nil) {
-            [contentForActivitySheet addObject:logMessage.image];
+        UIImage *const logImage = logMessage.image;
+        if (logImage != nil) {
+            [contentForActivitySheet addObject:logImage];
         }
     }
     
@@ -436,13 +424,17 @@
     NSMutableArray *logMessagesWithMinuteSeparators = [NSMutableArray new];
     
     NSDate *previousTimestampDate = nil;
-    for (ARKLogMessage *logMessage in logMessages) {
+    for (ARKLogMessage *const logMessage in logMessages) {
         NSTimeInterval const secondsPerMinute = 60.0;
         if (!previousTimestampDate || [logMessage.date timeIntervalSinceDate:previousTimestampDate] > self.minutesBetweenTimestamps * secondsPerMinute) {
-            NSTimeInterval timeIntervalRoundedToMinute = [logMessage.date timeIntervalSinceReferenceDate] - fmod([logMessage.date timeIntervalSinceReferenceDate], secondsPerMinute);
-            NSDate *timestampDate = [NSDate dateWithTimeIntervalSinceReferenceDate:timeIntervalRoundedToMinute];
-            [logMessagesWithMinuteSeparators addObject:[[ARKTimestampLogMessage alloc] initWithDate:timestampDate]];
-            previousTimestampDate = timestampDate;
+            NSTimeInterval const timeIntervalRoundedToMinute = [logMessage.date timeIntervalSinceReferenceDate] - fmod([logMessage.date timeIntervalSinceReferenceDate], secondsPerMinute);
+            NSDate *const timestampDate = [NSDate dateWithTimeIntervalSinceReferenceDate:timeIntervalRoundedToMinute];
+            
+            ARKTimestampLogMessage *const timestampLogMessage = [[ARKTimestampLogMessage alloc] initWithDate:timestampDate];
+            if (timestampLogMessage != nil) {
+                [logMessagesWithMinuteSeparators addObject:timestampLogMessage];
+                previousTimestampDate = timestampDate;
+            }
         }
         
         [logMessagesWithMinuteSeparators addObject:logMessage];
@@ -498,11 +490,6 @@
 {
     NSString *text = [[[self class] sharedDateFormatter] stringFromDate:date];
     return [super initWithText:text image:nil type:ARKLogTypeSeparator userInfo:nil date:date];
-}
-
-- (instancetype)initWithText:(NSString *)text image:(UIImage *)image type:(ARKLogType)type userInfo:(NSDictionary *)userInfo date:(nonnull NSDate *)date;
-{
-    return [self initWithDate:date];
 }
 
 @end

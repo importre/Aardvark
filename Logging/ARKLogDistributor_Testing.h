@@ -18,15 +18,10 @@
 //  limitations under the License.
 //
 
-NS_ASSUME_NONNULL_BEGIN
-
 
 @interface ARKLogDistributor (Private)
 
-- (NSMutableSet *)logObservers;
+- (nonnull NSMutableSet *)logObservers;
 - (NSUInteger)internalQueueOperationCount;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

@@ -24,17 +24,11 @@
 @class ARKLogMessage;
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 @protocol ARKLogFormatter <NSObject>
 
 @required
 
 /// Return a string that represents the log.
-- (NSString *)formattedLogMessage:(ARKLogMessage *)logMessage;
+- (nonnull NSString *)formattedLogMessage:(nonnull ARKLogMessage *)logMessage;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

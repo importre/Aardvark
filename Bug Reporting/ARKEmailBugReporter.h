@@ -27,15 +27,12 @@
 @protocol ARKLogFormatter;
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 @protocol ARKEmailBugReporterEmailBodyAdditionsDelegate <NSObject>
 
 @required
 
 /// Called on the main thread when a bug is filed. The key/value pairs in the returned dictionary will be appended to the bug report below the prefilledEmailBody.
-- (nullable NSDictionary *)emailBodyAdditionsForEmailBugReporter:(ARKEmailBugReporter *)emailBugReporter;
+- (nullable NSDictionary *)emailBodyAdditionsForEmailBugReporter:(nonnull ARKEmailBugReporter *)emailBugReporter;
 
 @end
 
@@ -43,19 +40,22 @@ NS_ASSUME_NONNULL_BEGIN
 /// Composes a bug report that is sent via email.
 @interface ARKEmailBugReporter : NSObject <ARKBugReporter>
 
-- (instancetype)initWithEmailAddress:(NSString *)emailAddress logStore:(ARKLogStore *)logStore;
+- (nullable instancetype)initWithEmailAddress:(nonnull NSString *)emailAddress logStore:(nonnull ARKLogStore *)logStore NS_DESIGNATED_INITIALIZER;
+
+- (nullable instancetype)init NS_UNAVAILABLE;
++ (nullable instancetype)new NS_UNAVAILABLE;
 
 /// The email address to which bug reports will be sent. Must be set before composeBugReport is called.
-@property (nonatomic, copy) NSString *bugReportRecipientEmailAddress;
+@property (nonnull, nonatomic, copy) NSString *bugReportRecipientEmailAddress;
 
 /// The email body that will be presented to the user when they compose a report.
-@property (nonatomic, copy) NSString *prefilledEmailBody;
+@property (nonnull, nonatomic, copy) NSString *prefilledEmailBody;
 
 /// The email body delegate, responsible for providing key/value pairs to include in the bug report at the time the bug is filed.
 @property (nullable, nonatomic, weak) id <ARKEmailBugReporterEmailBodyAdditionsDelegate> emailBodyAdditionsDelegate;
 
 /// The formatter used to prepare the log for entry into an email. Defaults to a vanilla instance of ARKDefaultLogFormatter.
-@property (nonatomic) id <ARKLogFormatter> logFormatter;
+@property (nonnull, nonatomic) id <ARKLogFormatter> logFormatter;
 
 /// Controls the number of recent error logs per log distributor to include in the email body of a bug report composed in a mail client that allows attachments. Defaults to 3.
 @property (nonatomic) NSUInteger numberOfRecentErrorLogsToIncludeInEmailBodyWhenAttachmentsAreAvailable;
@@ -67,15 +67,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) UIWindowLevel emailComposeWindowLevel;
 
 /// Returns formatted log messages as NSData.
-- (NSData *)formattedLogMessagesAsData:(NSArray *)logMessages;
+- (nullable NSData *)formattedLogMessagesAsData:(nonnull NSArray *)logMessages;
 
 /// Returns the MIME type of the data returned by formattedLogMessagesAsData:. MIME types are as specified by the IANA: http://www.iana.org/assignments/media-types/
-- (NSString *)formattedLogMessagesDataMIMEType;
+- (nonnull NSString *)formattedLogMessagesDataMIMEType;
 
 /// Returns the extension for the log attachments.
-- (NSString *)formattedLogMessagesAttachmentExtension;
+- (nonnull NSString *)formattedLogMessagesAttachmentExtension;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

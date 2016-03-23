@@ -22,29 +22,23 @@
 #import <UIKit/UIKit.h>
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 @interface ARKLogMessage : NSObject <NSCopying, NSSecureCoding>
-
-+ (instancetype)new NS_UNAVAILABLE;
-- (instancetype)init NS_UNAVAILABLE;
 
 /// Creates an ARKLogMessage with the provided parameters, created at the current date.
 /// @see initWithText:image:type:userInfo:date:
-- (instancetype)initWithText:(NSString *)text image:(nullable UIImage *)image type:(ARKLogType)type userInfo:(nullable NSDictionary *)userInfo;
+- (nonnull instancetype)initWithText:(nonnull NSString *)text image:(nullable UIImage *)image type:(ARKLogType)type userInfo:(nullable NSDictionary *)userInfo;
+- (nonnull instancetype)initWithText:(nonnull NSString *)text image:(nullable UIImage *)image type:(ARKLogType)type userInfo:(nullable NSDictionary *)userInfo date:(nonnull NSDate *)date NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithText:(NSString *)text image:(nullable UIImage *)image type:(ARKLogType)type userInfo:(nullable NSDictionary *)userInfo date:(NSDate *)date NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)init NS_UNAVAILABLE;
++ (nullable instancetype)new NS_UNAVAILABLE;
 
-@property (nonatomic, copy, readonly) NSDate *date;
-@property (nonatomic, copy, readonly) NSString *text;
-@property (nonatomic, readonly, nullable) UIImage *image;
+@property (nonnull, nonatomic, copy, readonly) NSDate *date;
+@property (nonnull, nonatomic, copy, readonly) NSString *text;
 @property (nonatomic, readonly) ARKLogType type;
+
+@property (nonatomic, readonly, nullable) UIImage *image;
 
 /// Arbitrary information that can be used by ARKLogObserver objects. This data is not persisted.
 @property (nonatomic, copy, readonly, nullable) NSDictionary *userInfo;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

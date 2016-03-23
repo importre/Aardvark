@@ -43,7 +43,7 @@ NSString *const ARKScreenshotFlashAnimationKey = @"ScreenshotFlashAnimation";
 @property (nonatomic) UIWindow *emailComposeWindow;
 @property (nonatomic, weak) UIWindow *previousKeyWindow;
 
-@property (nonatomic, copy) NSMutableArray *mutableLogStores;
+@property (nonatomic, copy, readonly) NSMutableArray *mutableLogStores;
 
 @property (nonatomic) BOOL attachScreenshotToNextBugReport;
 
@@ -54,7 +54,7 @@ NSString *const ARKScreenshotFlashAnimationKey = @"ScreenshotFlashAnimation";
 
 #pragma mark - Initialization
 
-- (instancetype)init;
+- (instancetype)initWithEmailAddress:(NSString *)emailAddress logStore:(ARKLogStore *)logStore;
 {
     self = [super init];
     if (!self) {
@@ -74,16 +74,6 @@ NSString *const ARKScreenshotFlashAnimationKey = @"ScreenshotFlashAnimation";
     _emailComposeWindowLevel = UIWindowLevelStatusBar + 3.0;
     
     _mutableLogStores = [NSMutableArray new];
-    
-    return self;
-}
-
-- (instancetype)initWithEmailAddress:(NSString *)emailAddress logStore:(ARKLogStore *)logStore;
-{
-    self = [self init];
-    if (!self) {
-        return nil;
-    }
     
     _bugReportRecipientEmailAddress = [emailAddress copy];
     [self addLogStores:@[logStore]];
@@ -105,7 +95,7 @@ NSString *const ARKScreenshotFlashAnimationKey = @"ScreenshotFlashAnimation";
 
 - (void)composeBugReportWithScreenshot:(BOOL)attachScreenshot;
 {
-    ARKCheckCondition(self.bugReportRecipientEmailAddress.length, , @"Attempting to compose a bug report without a recipient email address.");
+    ARKCheckCondition(self.bugReportRecipientEmailAddress.length > 0, , @"Attempting to compose a bug report without a recipient email address.");
     ARKCheckCondition(self.mutableLogStores.count > 0, , @"Attempting to compose a bug report without logs.");
     
     self.attachScreenshotToNextBugReport = attachScreenshot;
@@ -443,19 +433,20 @@ NSString *const ARKScreenshotFlashAnimationKey = @"ScreenshotFlashAnimation";
         }
     }
     
-    if (recentErrorLogs.length) {
+    if (recentErrorLogs.length > 0 ) {
         // Remove the final newline and create an immutable string.
         return [recentErrorLogs stringByReplacingCharactersInRange:NSMakeRange(recentErrorLogs.length - 1, 1) withString:@""];
     } else {
-        return nil;
+        return @"";
     }
 }
 
 - (NSData *)_mostRecentImageAsPNG:(NSArray *)logMessages;
 {
     for (ARKLogMessage *logMessage in [logMessages reverseObjectEnumerator]) {
-        if (logMessage.image) {
-            return UIImagePNGRepresentation(logMessage.image);
+        UIImage *const logImage = logMessage.image;
+        if (logImage != nil) {
+            return UIImagePNGRepresentation(logImage);
         }
     }
     

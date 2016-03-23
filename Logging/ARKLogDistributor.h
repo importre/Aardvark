@@ -27,55 +27,49 @@
 @class ARKLogStore;
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 /// Distrubutes log messages to log observers. All methods and properties on this class are threadsafe.
 @interface ARKLogDistributor : NSObject
 
 /// Returns the instance of the log distributor used by ARKLog().
-+ (nullable instancetype)defaultDistributor;
++ (nonnull instancetype)defaultDistributor;
 
 /// Defaults to ARKLogMessage. Can be set to a subclass of ARKLogMessage.
-@property Class logMessageClass;
+@property (nonnull) Class logMessageClass;
 
 /// Convenience method to store a reference to the default log store. Lazily creates a log store when accessed for the first time if one is not already set.
-@property ARKLogStore *defaultLogStore;
+@property (nonnull) ARKLogStore *defaultLogStore;
 
 /// Returns all instances of `ARKLogStore` that are currently registered as observers on this log distributor.
-@property (atomic, copy, readonly) NSSet *logStores;
+@property (nonnull, atomic, copy, readonly) NSSet *logStores;
 
 /// Retains an object that handles logging. Log observers are sent observeLogMessage: every time a log is appended. Allows for easy logging to third party services (i.e. Crashlytics, Mixpanel, etc).
-- (void)addLogObserver:(id <ARKLogObserver>)logObserver;
+- (void)addLogObserver:(nonnull id <ARKLogObserver>)logObserver;
 
 /// Releases an object that handles logging.
-- (void)removeLogObserver:(id <ARKLogObserver>)logObserver;
+- (void)removeLogObserver:(nonnull id <ARKLogObserver>)logObserver;
 
 /// Distributes all enqueued log messages to log observers prior to calling the completionHandler. Completion handler is called on the main queue.
-- (void)distributeAllPendingLogsWithCompletionHandler:(dispatch_block_t)completionHandler;
+- (void)distributeAllPendingLogsWithCompletionHandler:(nonnull dispatch_block_t)completionHandler;
 
 /// Distributes the log to the log observers.
-- (void)logMessage:(ARKLogMessage *)logMessage;
+- (void)logMessage:(nonnull ARKLogMessage *)logMessage;
 
 /// Creates a log message and distributes the log to the log observers.
-- (void)logWithText:(NSString *)text image:(nullable UIImage *)image type:(ARKLogType)type userInfo:(nullable NSDictionary *)userInfo;
+- (void)logWithText:(nonnull NSString *)text image:(nullable UIImage *)image type:(ARKLogType)type userInfo:(nullable NSDictionary *)userInfo;
 
 /// Creates a log message and distributes the log to the log observers.
-- (void)logWithType:(ARKLogType)type userInfo:(nullable NSDictionary *)userInfo format:(NSString *)format arguments:(va_list)argList;
+- (void)logWithType:(ARKLogType)type userInfo:(nullable NSDictionary *)userInfo format:(nonnull NSString *)format arguments:(nonnull void *)argList;
 
 /// Creates a log message and distributes the log to the log observers.
-- (void)logWithType:(ARKLogType)type userInfo:(nullable NSDictionary *)userInfo format:(NSString *)format, ... NS_FORMAT_FUNCTION(3,4);
+- (void)logWithType:(ARKLogType)type userInfo:(nullable NSDictionary *)userInfo format:(nonnull NSString *)format, ... NS_FORMAT_FUNCTION(3,4);
 
 /// Creates a log message with ARKLogTypeDefault and distributes the log to the log observers.
-- (void)logWithFormat:(NSString *)format arguments:(va_list)argList;
+- (void)logWithFormat:(nonnull NSString *)format arguments:(nonnull void *)argList;
 
 /// Creates a log message with ARKLogTypeDefault and distributes the log to the log observers.
-- (void)logWithFormat:(NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
+- (void)logWithFormat:(nonnull NSString *)format, ... NS_FORMAT_FUNCTION(1,2);
 
 /// Creates a log message with a screenshot and distributes the log to the log observers.
 - (void)logScreenshot;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

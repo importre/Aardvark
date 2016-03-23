@@ -25,9 +25,6 @@
 @class ARKLogStore;
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 /// Displays a list of ARKArdvarkLogs in a table.
 @interface ARKLogTableViewController : UITableViewController
 
@@ -38,37 +35,34 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Creates a log table view controller displaying logs from the default `ARKLogDistributor`'s default log store, using a default log formatter.
  */
-- (nullable instancetype)init;
+- (nonnull instancetype)init;
 
 /// @see `init`
-- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil;
+- (nonnull instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil;
 
 /**
  @param logStore The log store from which to display logs. Must not be nil.
  @param logFormatter A log formatter used to format display of log messages. Must not be nil.
  */
-- (nullable instancetype)initWithLogStore:(ARKLogStore *)logStore logFormatter:(id <ARKLogFormatter>)logFormatter NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithLogStore:(nonnull ARKLogStore *)logStore logFormatter:(nonnull id <ARKLogFormatter>)logFormatter NS_DESIGNATED_INITIALIZER;
 
-- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+- (nonnull instancetype)initWithStyle:(UITableViewStyle)style NS_UNAVAILABLE;
 
 //
 // @name Properties
 //
 
 /// The log store that provides the data for the table.
-@property (nonatomic, readonly) ARKLogStore *logStore;
+@property (nonnull, nonatomic, readonly) ARKLogStore *logStore;
 
 /// The formatter used to prepare the logs for the share/activity sheet.
-@property (nonatomic, readonly) id <ARKLogFormatter> logFormatter;
+@property (nonnull, nonatomic, readonly) id <ARKLogFormatter> logFormatter;
 
 /// The number of minutes between timestamps. Defaults to 3.
 @property (nonatomic) NSUInteger minutesBetweenTimestamps;
 
 /// Returns an array suitable for sharing via the activity sheet.
-- (NSArray *)contentForActivitySheet;
+- (nonnull NSArray *)contentForActivitySheet;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

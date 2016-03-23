@@ -21,9 +21,6 @@
 #import <Foundation/Foundation.h>
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 @protocol ARKBugReporter <NSObject>
 
 /// Called when the user has triggered the creation of a bug report, including a screenshot to the report.
@@ -33,14 +30,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)composeBugReportWithoutScreenshot;
 
 /// Add logs from logStores to future bug reports.
-- (void)addLogStores:(NSArray *)logStores;
+- (void)addLogStores:(nonnull NSArray *)logStores;
 
 /// Remove logs from logStores from future bug reports.
-- (void)removeLogStores:(NSArray *)logStores;
+- (void)removeLogStores:(nonnull NSArray *)logStores;
 
 /// The log stores used to generate bug reports.
-- (NSArray *)logStores;
+- (nonnull NSArray *)logStores;
 
 @end
-
-NS_ASSUME_NONNULL_END

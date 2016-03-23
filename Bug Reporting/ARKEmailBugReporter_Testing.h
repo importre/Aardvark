@@ -18,14 +18,9 @@
 //  limitations under the License.
 //
 
-NS_ASSUME_NONNULL_BEGIN
-
 
 @interface ARKEmailBugReporter ()
 
-- (NSString *)_recentErrorLogMessagesAsPlainText:(NSArray *)logMessages count:(NSUInteger)errorLogsToInclude;
+- (nonnull NSString *)_recentErrorLogMessagesAsPlainText:(nonnull NSArray *)logMessages count:(NSUInteger)errorLogsToInclude;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

@@ -66,9 +66,6 @@
 - (instancetype)init;
 {
     self = [super init];
-    if (!self) {
-        return nil;
-    }
     
     _logDistributingQueue = [NSOperationQueue new];
     _logDistributingQueue.name = [NSString stringWithFormat:@"%@ Log Distributing Queue", self];
@@ -184,8 +181,6 @@
 
 - (void)distributeAllPendingLogsWithCompletionHandler:(dispatch_block_t)completionHandler;
 {
-    ARKCheckCondition(completionHandler != NULL, , @"Must provide a completion handler!");
-    
     [self _setDistributionQualityOfServiceUserInitiated];
     [self.logDistributingQueue addOperationWithBlock:^{
         [[NSOperationQueue mainQueue] addOperationWithBlock:completionHandler];
@@ -213,7 +208,7 @@
     }];
 }
 
-- (void)logWithType:(ARKLogType)type userInfo:(NSDictionary *)userInfo format:(NSString *)format arguments:(va_list)argList;
+- (void)logWithType:(ARKLogType)type userInfo:(NSDictionary *)userInfo format:(NSString *)format arguments:(nonnull void *)argList;
 {
     NSString *logText = [[NSString alloc] initWithFormat:format arguments:argList];
     [self logWithText:logText image:nil type:type userInfo:userInfo];
@@ -227,7 +222,7 @@
     va_end(argList);
 }
 
-- (void)logWithFormat:(NSString *)format arguments:(va_list)argList;
+- (void)logWithFormat:(NSString *)format arguments:(nonnull void *)argList;
 {
     NSString *logText = [[NSString alloc] initWithFormat:format arguments:argList];
     [self logWithText:logText image:nil type:ARKLogTypeDefault userInfo:nil];

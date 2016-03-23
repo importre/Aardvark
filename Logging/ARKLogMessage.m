@@ -42,10 +42,7 @@
 - (instancetype)initWithText:(NSString *)text image:(UIImage *)image type:(ARKLogType)type userInfo:(NSDictionary *)userInfo date:(nonnull NSDate *)date;
 {
     self = [super init];
-    if (!self) {
-        return nil;
-    }
-
+    
     _text = [text copy];
     _image = image;
     _type = type;

@@ -24,14 +24,8 @@
 @class ARKLogMessage;
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 @interface ARKScreenshotViewController : UIViewController
 
-- (nullable instancetype)initWithLogMessage:(ARKLogMessage *)logMessage;
+- (nullable instancetype)initWithLogMessage:(nonnull ARKLogMessage *)logMessage;
 
 @end
-
-
-NS_ASSUME_NONNULL_END

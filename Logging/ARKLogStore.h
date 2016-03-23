@@ -21,29 +21,26 @@
 #import <Aardvark/ARKLogObserver.h>
 
 
-NS_ASSUME_NONNULL_BEGIN
-
-
 /// Stores log messages locally for use in bug reports. All methods and properties on this class are threadsafe.
 @interface ARKLogStore : NSObject <ARKLogObserver>
 
 /// Creates an ARKLogStore with persistedLogFileURL set to the supplied fileName within the application support directory and a maximumLogMessageCount of logs to persist.
-- (nullable instancetype)initWithPersistedLogFileName:(NSString *)fileName maximumLogMessageCount:(NSUInteger)maximumLogMessageCount NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithPersistedLogFileName:(nonnull NSString *)fileName maximumLogMessageCount:(NSUInteger)maximumLogMessageCount NS_DESIGNATED_INITIALIZER;
 
 /// Creates an ARKLogStore with persistedLogsFileURL set to the supplied fileName within the application support directory that keeps a maximum of 2000 logs persisted.
-- (nullable instancetype)initWithPersistedLogFileName:(NSString *)fileName;
+- (nullable instancetype)initWithPersistedLogFileName:(nonnull NSString *)fileName;
 
 - (nullable instancetype)init NS_UNAVAILABLE;
 + (nullable instancetype)new NS_UNAVAILABLE;
 
 /// Path to the file on disk that contains peristed logs.
-@property (nonatomic, copy, readonly) NSURL *persistedLogFileURL;
+@property (nonnull, nonatomic, copy, readonly) NSURL *persistedLogFileURL;
 
 /// The maximum number of logs retrieveAllLogMessagesWithCompletionHandler: should return. Old messages are trimmed once this limit is hit.
 @property (nonatomic, readonly) NSUInteger maximumLogMessageCount;
 
 /// Convenience property that allows bug reporters to prefix logs with the name of the store they came from. Defaults to nil.
-@property (copy) NSString *name;
+@property (nullable, copy) NSString *name;
 
 /// Controls whether consuming logs also outputs to NSLog. Defaults to NO.
 @property BOOL printsLogsToConsole;
@@ -52,15 +49,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property BOOL prefixNameWhenPrintingToConsole;
 
 /// Block that allows for filtering logs. Return YES if the receiver should observe the supplied log.
-@property (copy) BOOL (^logFilterBlock)(ARKLogMessage *logMessage);
+@property (nullable, copy) BOOL (^logFilterBlock)(ARKLogMessage * __nonnull logMessage);
 
 /// Retrieves an array of ARKLogMessage objects. Completion handler is called on the main queue.
-- (void)retrieveAllLogMessagesWithCompletionHandler:(void (^)(NSArray *logMessages))completionHandler;
+- (void)retrieveAllLogMessagesWithCompletionHandler:(nonnull void (^)(NSArray * __nonnull logMessages))completionHandler;
 
 /// Removes all logs. Completion handler is called on the main queue.
 - (void)clearLogsWithCompletionHandler:(nullable dispatch_block_t)completionHandler;
 
 @end
-
-
-NS_ASSUME_NONNULL_END
