@@ -301,13 +301,8 @@
             break;
     }
     
-    if ([cell respondsToSelector:@selector(separatorInset) /* iOS 7 or later */]) {
-        cell.textLabel.textColor = textColor;
-        cell.backgroundColor = backgroundColor;
-    } else {
-        // cell.backgroundColor doesn't work on iOS 6. Instead, set the text color.
-        cell.textLabel.textColor = [textColor isEqual:[UIColor blackColor]] ? textColor : backgroundColor;
-    }
+    cell.textLabel.textColor = textColor;
+    cell.backgroundColor = backgroundColor;
     
     return cell;
 }

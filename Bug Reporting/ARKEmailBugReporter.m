@@ -23,8 +23,9 @@
 
 #import "AardvarkDefines.h"
 #import "ARKDefaultLogFormatter.h"
-#import "ARKLogStore.h"
+#import "ARKLogging.h"
 #import "ARKLogMessage.h"
+#import "ARKLogStore.h"
 
 
 NSString *const ARKScreenshotFlashAnimationKey = @"ScreenshotFlashAnimation";
@@ -207,11 +208,7 @@ NSString *const ARKScreenshotFlashAnimationKey = @"ScreenshotFlashAnimation";
 {
     if (!_emailComposeWindow) {
         _emailComposeWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        
-        if ([_emailComposeWindow respondsToSelector:@selector(tintColor)] /* iOS 7 or later */) {
-            // The keyboard won't show up on iOS 6 with a high windowLevel, but iOS 7+ will.
-            _emailComposeWindow.windowLevel = self.emailComposeWindowLevel;
-        }
+        _emailComposeWindow.windowLevel = self.emailComposeWindowLevel;
     }
     
     return _emailComposeWindow;
@@ -263,34 +260,23 @@ NSString *const ARKScreenshotFlashAnimationKey = @"ScreenshotFlashAnimation";
     NSString * const composeReportButtonTitle = NSLocalizedString(@"Compose Report", @"Button title to compose bug report");
     NSString * const cancelButtonTitle = NSLocalizedString(@"Cancel", @"Button title to not compose a bug report");
     
-    // iOS 8 and later
-    if ([UIAlertController class]) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:composeReportButtonTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            UITextField *textfield = [alertController.textFields firstObject];
-            [self _createBugReportWithTitle:textfield.text];
-        }]];
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleDefault handler:NULL]];
-        
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            [self _configureAlertTextfield:textField];
-        }];
-        
-        UIViewController *const rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        UIViewController *const viewControllerToPresentAlertController = rootViewController.presentedViewController ?: rootViewController;
-        [viewControllerToPresentAlertController presentViewController:alertController animated:YES completion:NULL];
-    }
-    else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:composeReportButtonTitle, nil];
-        alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-        
-        UITextField *textField = [alertView textFieldAtIndex:0];
+    UIAlertController *const alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:composeReportButtonTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UITextField *textfield = [alertController.textFields firstObject];
+        [self _createBugReportWithTitle:textfield.text];
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleDefault handler:NULL]];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         [self _configureAlertTextfield:textField];
-        
-        [alertView show];
-    }
+    }];
+    
+    UIViewController *const rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *const viewControllerToPresentAlertController = rootViewController.presentedViewController ?: rootViewController;
+    [viewControllerToPresentAlertController presentViewController:alertController animated:YES completion:NULL];
+
 }
 
 - (void)_configureAlertTextfield:(UITextField *)textField

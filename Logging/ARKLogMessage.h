@@ -18,7 +18,7 @@
 //  limitations under the License.
 //
 
-#import <Aardvark/ARKLogging.h>
+#import <Aardvark/ARKLogTypes.h>
 #import <UIKit/UIKit.h>
 
 

@@ -246,18 +246,12 @@
     UIImage *screenshot = nil;
     
     @try {
-        UIWindow *const keyWindow = [[UIApplication sharedApplication] keyWindow];
-        if ([keyWindow respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
-            // iOS 7 and later.
-            CGRect const screenBounds = [UIScreen mainScreen].bounds;
-            UIGraphicsBeginImageContextWithOptions(screenBounds.size, NO, 0.0);
-            for (UIWindow *const window in [UIApplication sharedApplication].windows) {
-                [window drawViewHierarchyInRect:screenBounds afterScreenUpdates:NO];
-            }
-        } else {
-            UIGraphicsBeginImageContextWithOptions(keyWindow.bounds.size, YES, 0.0);
-            [keyWindow.layer renderInContext:UIGraphicsGetCurrentContext()];
+        CGRect const screenBounds = [UIScreen mainScreen].bounds;
+        UIGraphicsBeginImageContextWithOptions(screenBounds.size, NO, 0.0);
+        for (UIWindow *const window in [UIApplication sharedApplication].windows) {
+            [window drawViewHierarchyInRect:screenBounds afterScreenUpdates:NO];
         }
+        
         screenshot = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
     }
@@ -301,27 +295,12 @@
 
 - (void)_setDistributionQualityOfServiceUserInitiated;
 {
-#ifdef __IPHONE_8_0
-    [self _setDistributionQualityOfService:NSQualityOfServiceUserInitiated];
-#endif
+    self.logDistributingQueue.qualityOfService = NSQualityOfServiceUserInitiated;
 }
 
 - (void)_setDistributionQualityOfServiceBackground;
 {
-#ifdef __IPHONE_8_0
-    [self _setDistributionQualityOfService:NSQualityOfServiceBackground];
-#endif
+    self.logDistributingQueue.qualityOfService = NSQualityOfServiceBackground;
 }
-
-#ifdef __IPHONE_8_0
-
-- (void)_setDistributionQualityOfService:(NSQualityOfService)qualityOfService;
-{
-    if ([self.logDistributingQueue respondsToSelector:@selector(setQualityOfService:)] /* iOS 8 or later */) {
-        self.logDistributingQueue.qualityOfService = qualityOfService;
-    }
-}
-
-#endif
 
 @end

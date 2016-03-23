@@ -24,6 +24,7 @@
 #import <Aardvark/ARKIndividualLogViewController.h>
 #import <Aardvark/ARKLogDistributor.h>
 #import <Aardvark/ARKLogFormatter.h>
+#import <Aardvark/ARKLogging.h>
 #import <Aardvark/ARKLogMessage.h>
 #import <Aardvark/ARKLogObserver.h>
 #import <Aardvark/ARKLogStore.h>

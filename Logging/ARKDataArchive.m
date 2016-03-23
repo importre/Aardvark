@@ -78,11 +78,7 @@ NSUInteger const ARKMaximumChunkSizeForTrimOperation = (1024 * 1024);
     _fileOperationQueue.name = [NSString stringWithFormat:@"%@ File Operation Queue", self];
     _fileOperationQueue.maxConcurrentOperationCount = 1;
     
-#ifdef __IPHONE_8_0
-    if ([_fileOperationQueue respondsToSelector:@selector(setQualityOfService:)] /* iOS 8 or later */) {
-        _fileOperationQueue.qualityOfService = NSQualityOfServiceBackground;
-    }
-#endif
+    _fileOperationQueue.qualityOfService = NSQualityOfServiceBackground;
     
     [_fileOperationQueue addOperationWithBlock:^{
         // Count the number of (valid) archived objects.
@@ -172,11 +168,7 @@ NSUInteger const ARKMaximumChunkSizeForTrimOperation = (1024 * 1024);
     }];
     
     // Set the QoS of this operation to be high, since objects are typically requested in order to fulfill a user operation.
-#ifdef __IPHONE_8_0
-    if ([readOperation respondsToSelector:@selector(setQualityOfService:)] /* iOS 8 or later */) {
-        readOperation.qualityOfService = NSQualityOfServiceUserInitiated;
-    }
-#endif
+    readOperation.qualityOfService = NSQualityOfServiceUserInitiated;
     
     [self.fileOperationQueue addOperation:readOperation];
 }
@@ -202,11 +194,7 @@ NSUInteger const ARKMaximumChunkSizeForTrimOperation = (1024 * 1024);
     
     if (wait) {
         // Set the QoS of this operation to be high if the calling code is waiting for it.
-#ifdef __IPHONE_8_0
-        if ([saveOperation respondsToSelector:@selector(setQualityOfService:)] /* iOS 8 or later */) {
-            saveOperation.qualityOfService = NSQualityOfServiceUserInitiated;
-        }
-#endif
+        saveOperation.qualityOfService = NSQualityOfServiceUserInitiated;
     }
     
     if (wait) {
