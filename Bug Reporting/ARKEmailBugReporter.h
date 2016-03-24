@@ -40,7 +40,7 @@
 /// Composes a bug report that is sent via email.
 @interface ARKEmailBugReporter : NSObject <ARKBugReporter>
 
-- (nullable instancetype)initWithEmailAddress:(nonnull NSString *)emailAddress logStore:(nonnull ARKLogStore *)logStore NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithEmailAddress:(nonnull NSString *)emailAddress logStore:(nonnull ARKLogStore *)logStore NS_DESIGNATED_INITIALIZER;
 
 - (nullable instancetype)init NS_UNAVAILABLE;
 + (nullable instancetype)new NS_UNAVAILABLE;

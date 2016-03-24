@@ -57,9 +57,6 @@ NSString *const ARKScreenshotFlashAnimationKey = @"ScreenshotFlashAnimation";
 - (instancetype)initWithEmailAddress:(NSString *)emailAddress logStore:(ARKLogStore *)logStore;
 {
     self = [super init];
-    if (!self) {
-        return nil;
-    }
     
     _prefilledEmailBody = [NSString stringWithFormat:@"Reproduction Steps:\n"
                            @"1. \n"
