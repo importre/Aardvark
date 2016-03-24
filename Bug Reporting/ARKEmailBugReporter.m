@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+#import <MessageUI/MessageUI.h>
+
 #import "ARKEmailBugReporter.h"
 #import "ARKEmailBugReporter_Testing.h"
 

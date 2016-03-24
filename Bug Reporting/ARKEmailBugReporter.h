@@ -19,7 +19,7 @@
 //
 
 #import <Aardvark/ARKBugReporter.h>
-#import <MessageUI/MessageUI.h>
+#import <UIKit/UIKit.h>
 
 
 @class ARKEmailBugReporter;

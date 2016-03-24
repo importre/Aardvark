@@ -44,7 +44,7 @@ Aardvark.addDefaultBugReportingGestureWithEmailBugReporterWithRecipient(_:)
 In Objective-C:
 
 ```objc
-[ARKAardvark addDefaultBugReportingGestureWithEmailBugReporterWithRecipient:]
+[Aardvark addDefaultBugReportingGestureWithEmailBugReporterWithRecipient:]
 ```
 
 ###3) Replace calls to `NSLog` with `ARKLog`.

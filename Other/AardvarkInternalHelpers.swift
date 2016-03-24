@@ -1,9 +1,9 @@
 //
-//  ARKDataArchive_Testing.h
+//  AardvarkInternalHelpers.swift
 //  Aardvark
 //
-//  Created by Peter Westen on 3/17/15.
-//  Copyright 2015 Square, Inc.
+//  Created by Dan Federman on 3/24/16.
+//  Copyright © 2016 Square, Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -18,10 +18,13 @@
 //  limitations under the License.
 //
 
-@interface ARKDataArchive (Private)
+import Foundation
 
-@property (nonatomic, readonly) NSFileHandle *fileHandle;
 
-- (void)waitUntilAllOperationsAreFinished;
-
-@end
+func noteImproperAPIUse(message: String) {
+    do {
+        throw NSError(domain: "ARKImproperAPIUsageDomain", code: 0, userInfo: nil)
+    } catch _ {
+        NSLog(message)
+    }
+}

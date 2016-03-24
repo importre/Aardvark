@@ -29,6 +29,7 @@
 #import "ARKLogDistributor_Testing.h"
 #import "ARKLogStore.h"
 #import "ARKLogStore_Testing.h"
+#import "ARKLogging.h"
 
 
 @interface ARKEmailBugReporterTests : XCTestCase
