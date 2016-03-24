@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+@import Aardvark;
+
 #import "SampleAppDelegate.h"
 
 #import "SampleCrashlyticsLogObserver.h"

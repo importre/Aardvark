@@ -18,11 +18,7 @@
 //  limitations under the License.
 //
 
-#import <Aardvark/ARKDefaultLogFormatter.h>
-#import <Aardvark/ARKEmailBugReporter.h>
-#import <Aardvark/ARKLogTableViewController.h>
-#import <Aardvark/ARKLogMessage.h>
-#import <Aardvark/ARKLogStore.h>
+@import Aardvark;
 
 #import "SampleAppDelegate.h"
 #import "SampleViewController.h"

@@ -18,6 +18,9 @@
 //  limitations under the License.
 //
 
+@class ARKEmailBugReporter;
+
+
 @interface SampleAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic) UIWindow *window;
