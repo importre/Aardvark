@@ -18,16 +18,17 @@
 //  limitations under the License.
 //
 
-#import "ARKLogTableViewController.h"
-#import "ARKLogTableViewController_Testing.h"
+#import <Aardvark/ARKLogTableViewController.h>
 
+#import <Aardvark/ARKIndividualLogViewController.h>
+#import <Aardvark/ARKDefaultLogFormatter.h>
+#import <Aardvark/ARKLogDistributor.h>
+#import <Aardvark/ARKLogMessage.h>
+#import <Aardvark/ARKLogStore.h>
+#import <Aardvark/ARKScreenshotViewController.h>
+
+#import "ARKLogTableViewController_Testing.h"
 #import "AardvarkDefines.h"
-#import "ARKIndividualLogViewController.h"
-#import "ARKDefaultLogFormatter.h"
-#import "ARKLogDistributor.h"
-#import "ARKLogMessage.h"
-#import "ARKLogStore.h"
-#import "ARKScreenshotViewController.h"
 #import "UIActivityViewController+ARKAdditions.h"
 
 

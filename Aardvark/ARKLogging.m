@@ -18,9 +18,9 @@
 //  limitations under the License.
 //
 
-#import "ARKLogging.h"
+#import <Aardvark/ARKLogging.h>
 
-#import "ARKLogDistributor.h"
+#import <Aardvark/ARKLogDistributor.h>
 
 
 void ARKLog(NSString *format, ...)

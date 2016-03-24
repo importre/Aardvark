@@ -18,7 +18,7 @@
 //  limitations under the License.
 //
 
-#import "ARKLogMessage.h"
+#import <Aardvark/ARKLogMessage.h>
 
 #import "AardvarkDefines.h"
 

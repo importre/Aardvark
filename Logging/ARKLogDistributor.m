@@ -18,12 +18,13 @@
 //  limitations under the License.
 //
 
-#import "ARKLogDistributor.h"
-#import "ARKLogDistributor_Testing.h"
+#import <Aardvark/ARKLogDistributor.h>
 
+#import <Aardvark/ARKLogMessage.h>
+#import <Aardvark/ARKLogStore.h>
+
+#import "ARKLogDistributor_Testing.h"
 #import "AardvarkDefines.h"
-#import "ARKLogMessage.h"
-#import "ARKLogStore.h"
 
 
 @interface ARKLogDistributor ()

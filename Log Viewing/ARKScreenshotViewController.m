@@ -18,9 +18,10 @@
 //  limitations under the License.
 //
 
-#import "ARKScreenshotViewController.h"
+#import <Aardvark/ARKScreenshotViewController.h>
 
-#import "ARKLogMessage.h"
+#import <Aardvark/ARKLogMessage.h>
+
 #import "UIActivityViewController+ARKAdditions.h"
 
 
